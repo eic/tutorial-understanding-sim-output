@@ -21,12 +21,14 @@ objectives:
     !pip install fsspec-xrootd
     !pip install particle
 ```
-> Note: we will be using other standard python packages such as `numpy` and `pandas`, which is pre-installed on Colab. 
+
+> Note: we will be using other standard python packages such as `numpy` and `pandas`, which are pre-installed on Colab. 
 {: .callout}
 
 
-## Locate simulation campaign output 
-
+## Access simulation campaign output 
+> The simulation campaign [website](https://eic.github.io/epic-prod/documentation/default_datasets.html) documents the available datasets and version information.
+> To browse the file directory, see the [previous tutorials](https://eic.github.io/tutorial-analysis/01-introduction/index.html).
 ## Access rootfiles with uproot
 > Open a simulation campaign file
 
