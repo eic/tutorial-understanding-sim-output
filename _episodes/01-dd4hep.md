@@ -47,10 +47,9 @@ This Geant4-based simualtion package propagates particles through magnetic field
   -  Individual branches for signals from various sub-detector systems e.g. `VertexBarrelHits`
 
 > Exercise 1.1: access simulation campaign rootfiles 
-  The simulation campaign [website](https://eic.github.io/epic-prod/documentation/default_datasets.html) documents the available datasets and version information.
-  -__Browse the directory__ 
-  For stand-alone `xrdfs` command, see the [previous tutorials](https://eic.github.io/tutorial-analysis/01-introduction/index.html). Here we will proceed with the python interface:
-
+> The simulation campaign [website](https://eic.github.io/epic-prod/documentation/default_datasets.html) documents the available datasets and version information.
+> -__Browse the directory__ 
+  > For stand-alone `xrdfs` command, see the [previous tutorials](https://eic.github.io/tutorial-analysis/01-introduction/index.html). Here we will proceed with the python interface:
   ```console
 from XRootD import client
 # Create XRootD client
@@ -67,8 +66,7 @@ if status.ok:
 else:
     print(f"Error: {status.message}")
   ```
-
-  -__Open a simulation campaign file__
+> -__Open a simulation campaign file__
   ```console
 fname      = eic_server+fpath+'e-_10GeV_130to177deg.0307.eicrecon.tree.edm4eic.root'
 tree_name  = "events" #"podio_metadata"
@@ -89,23 +87,24 @@ print(df)
   ```
 {: .challenge}
 
+
 > Exercise 1.3: extract momentum distribution of primary electrons
-  ```console
-  ## select electrons 
+> ```console
+  # select electrons 
   from particle import Particle
   part   = Particle.from_name("e-")
   pdg_id = part.pdgid.abspid
   condition1  = df["MCParticles.PDG"]==pdg_id
-  ## select primary particles
+  # select primary particles
   condition2  = df["MCParticles.generatorStatus"]==1
-
-  ## extract momentum
-  ## all electrons
+  
+  # extract momentum
+  # all electrons
   df_new = df[condition1]
   mom    = np.sqrt(df_new["MCParticles.momentum.x"]**2+df_new["MCParticles.momentum.y"]**2+df_new["MCParticles.momentum.z"]**2)
   bins   = np.arange(0,20)
   _      = plt.hist(mom,bins=bins,alpha=0.5)
-  ## primary electrons
+  # primary electrons
   df_new = df[condition1&condition2]
   mom    = np.sqrt(df_new["MCParticles.momentum.x"]**2+df_new["MCParticles.momentum.y"]**2+df_new["MCParticles.momentum.z"]**2)
   _      = plt.hist(mom,bins=bins,histtype="step", color='r')
