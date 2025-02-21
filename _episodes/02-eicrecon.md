@@ -14,15 +14,12 @@ keypoints:
 
 
 ## Reconstruction workflow
-The ePIC reconsutrction framework `EICrecon` is maintained [on github](https://github.com/eic/eicrecon/). It process simulated hits from various detectors to reconstruct trajectory, PID, etc, and eventually reconstruct the simulated particle and physics observables at the vertex.
+The ePIC reconsutrction framework `EICrecon` is maintained [on github](https://github.com/eic/eicrecon/). It process simulated hits from various detectors to reconstruct trajectory, PID, etc, and eventually reconstruct the simulated particle and physics observables at the vertex. In this section, we will use __track reconstruction__ as an example. Please refer to the Lehigh reconstruction workfest [presentations](https://indico.bnl.gov/event/20727/sessions/7433/#20240725) for reconstruction workflow of other systems. 
 
 Each reconstruction step involves 3 components:
 - the algorithm,
 - the JOmniFactory where algorithm and data type are declared.
 - the factory generator to excute the algorithm.
-
-> in this section, we will use __track reconstruction__ as an example. Please refer to the Lehigh reconstruction workfest [presentations](https://indico.bnl.gov/event/20727/sessions/7433/#20240725) for reconstruction workflow of other systems. 
-
 
 ### __Digitization__
   All simualted detector hits are digitized to reflect certain detector specs e.g. spatial and time resolution, and energy threshold.  For example, the `VertexBarrelHits` from simulation are digitized through the `SiliconTrackerDigi` factory in `EICrecon/src/detectors/BVTX/BVTX.cc`:
@@ -43,6 +40,8 @@ Each reconstruction step involves 3 components:
         app
     ));
   ```
+
+
   The actual algorithm locates at `EICrecon/src/algorithms/digi/SiliconTrackerDigi.cc`, with its input and output specified in `SiliconTrackerDigi_factory.h`:
 
   ```console
@@ -62,7 +61,8 @@ Each reconstruction step involves 3 components:
         ParameterRef<double> m_timeResolution {this, "timeResolution", config().timeResolution};
         ...
   ```
-  By comparing the two blocks of code above, we can see that the digitized hits, `SiBarrelVertexRawHits`, are stored in the data type `RawTrackerHit` that is defined in the [edm4eic data model](https://github.com/eic/EDM4eic/blob/main/edm4eic.yaml):
+
+By comparing the two blocks of code above, we can see that the digitized hits, `SiBarrelVertexRawHits`, are stored in the data type `RawTrackerHit` that is defined in the [edm4eic data model](https://github.com/eic/EDM4eic/blob/main/edm4eic.yaml):
   ```console
     edm4eic::RawTrackerHit:
     Description: "Raw (digitized) tracker hit"
@@ -73,7 +73,7 @@ Each reconstruction step involves 3 components:
       - int32_t           timeStamp         
   ```
 
-  In addition, the one-to-one relation between the sim hit and its digitized hit is stored as an `MCRecoTrackerHitAssociation` object: 
+In addition, the one-to-one relation between the sim hit and its digitized hit is stored as an `MCRecoTrackerHitAssociation` object: 
   ```console
     edm4eic::MCRecoTrackerHitAssociation:
     Description: "Association between a RawTrackerHit and a SimTrackerHit"
@@ -104,12 +104,12 @@ By default, we use the Combinatorial Kalman Filter from the ACTS library to hand
 {: .challenge}
 
 ### __Reconstruction output__
-> - `events` tree:
-    > - `MCParticles` and detector sim hits are copied from simulation output to recon output
-    > - outputs from each step of recon algorithms must be either `edm4hep` or `edm4eic` object if you want to save them in recon output
-    > - the default list of saved objects in recon output is defined in `EICrecon/src/services/io/podio/JEventProcessorPODIO.cc`. It can be configured in command line. 
-> - `podio_metadata` tree:
-    > - `events___idTable` provides a lookup table between output collection name and IDs.
+- `events` tree:
+    - `MCParticles` and detector sim hits are copied from simulation output to recon output
+    - outputs from each step of recon algorithms must be either `edm4hep` or `edm4eic` object if you want to save them in recon output
+    - the default list of saved objects in recon output is defined in `EICrecon/src/services/io/podio/JEventProcessorPODIO.cc`. It can be configured in command line. 
+- `podio_metadata` tree:
+    - `events___idTable` provides a lookup table between output collection name and IDs.
 
 
 > Exercise 2.3: 
@@ -124,7 +124,7 @@ By default, we use the Combinatorial Kalman Filter from the ACTS library to hand
 {: .challenge}
 {% include links.md %}
 
-## Future reading
-> - Generate your own simulation and reconstruction rootfiles [tutorial](https://eic.github.io/tutorial-simulations-using-ddsim-and-geant4/)
-> - Contribute to reconstruction algorithsm [tutorial](https://eic.github.io/tutorial-reconstruction-algorithms/)
-> - Develop analysis benchmarks [tutorial](https://eic.github.io/tutorial-developing-benchmarks/)
+## What's next
+- Generate your own simulation and reconstruction rootfiles [tutorial](https://eic.github.io/tutorial-simulations-using-ddsim-and-geant4/)
+- Contribute to reconstruction algorithsm [tutorial](https://eic.github.io/tutorial-reconstruction-algorithms/)
+- Develop analysis benchmarks [tutorial](https://eic.github.io/tutorial-developing-benchmarks/)
