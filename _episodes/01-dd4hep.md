@@ -81,12 +81,12 @@ print(f"Read {fname}:{tree_name}. \n {tree.num_entries} events in total")
 > Exercise 1.2: inspect available branches in a rootfile
 > -  use ```tree.keys(filter_name="*",recursive=False)``` to display all branches
 > -  extract a given branch to dataframe
-  ```console
+```console
 bname = "MCParticles" 
 df    = tree[bname].array(library="ak")
 df    = ak.to_dataframe(df)
 print(df)
-  ```
+```
 {: .challenge}
 
 
@@ -99,7 +99,6 @@ pdg_id = part.pdgid.abspid
 condition1  = df["MCParticles.PDG"]==pdg_id
 # select primary particles
 condition2  = df["MCParticles.generatorStatus"]==1 
-
 # extract momentum and plot
 # all electrons
 df_new = df[condition1]   
