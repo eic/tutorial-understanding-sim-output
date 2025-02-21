@@ -24,7 +24,7 @@ Each reconstruction step involves 3 components:
 > in this section, we will use __track reconstruction__ as an example. Please refer to the Lehigh reconstruction workfest [presentations](https://indico.bnl.gov/event/20727/sessions/7433/#20240725) for reconstruction workflow of other systems. 
 
 
-> - __Digitization__
+### __Digitization__
   All simualted detector hits are digitized to reflect certain detector specs e.g. spatial and time resolution, and energy threshold.  For example, the `VertexBarrelHits` from simulation are digitized through the `SiliconTrackerDigi` factory in `EICrecon/src/detectors/BVTX/BVTX.cc`:
   ```console
       // Digitization
@@ -72,7 +72,8 @@ Each reconstruction step involves 3 components:
       - int32_t           charge             
       - int32_t           timeStamp         
   ```
-    In addition, the one-to-one relation between the sim hit and its digitized hit is stored as an `MCRecoTrackerHitAssociation` object: 
+
+  In addition, the one-to-one relation between the sim hit and its digitized hit is stored as an `MCRecoTrackerHitAssociation` object: 
   ```console
     edm4eic::MCRecoTrackerHitAssociation:
     Description: "Association between a RawTrackerHit and a SimTrackerHit"
@@ -83,7 +84,8 @@ Each reconstruction step involves 3 components:
       - edm4eic::RawTrackerHit rawHit       // reference to the digitized hit
       - edm4hep::SimTrackerHit simHit       // reference to the simulated hit
   ```
-    which is filled in `SiliconTrackerDigi.cc`:
+
+  which is filled in `SiliconTrackerDigi.cc`:
   ```console
     auto hitassoc = associations->create();
     hitassoc.setWeight(1.0);
@@ -95,34 +97,34 @@ Each reconstruction step involves 3 components:
 {: .challenge}
 
 
-> -__Track Reconstruction__
-    By default, we use the Combinatorial Kalman Filter from the ACTS library to handle track finding and fitting. This happens in the `CKFTracking` factory.  
+### __Track Reconstruction__
+By default, we use the Combinatorial Kalman Filter from the ACTS library to handle track finding and fitting. This happens in the `CKFTracking` factory.  
 
 > Exercise 2.2: please find the inputs and outputs of `CKFTracking`, and draw a flow chart from `CentralTrackerMeasurements` to `CentralTrackVertices`.
 {: .challenge}
 
--__Reconstruction output__
-    - `events` tree:
-        - `MCParticles` and detector sim hits are copied from simulation output to recon output
-        - outputs from each step of recon algorithms must be either `edm4hep` or `edm4eic` object if you want to save them in recon output
-        - the default list of saved objects in recon output is defined in `EICrecon/src/services/io/podio/JEventProcessorPODIO.cc`. It can be configured in command line. 
-    - `podio_metadata` tree:
-        - `events___idTable` provides a lookup table between output collection name and IDs.
+### __Reconstruction output__
+> - `events` tree:
+    > - `MCParticles` and detector sim hits are copied from simulation output to recon output
+    > - outputs from each step of recon algorithms must be either `edm4hep` or `edm4eic` object if you want to save them in recon output
+    > - the default list of saved objects in recon output is defined in `EICrecon/src/services/io/podio/JEventProcessorPODIO.cc`. It can be configured in command line. 
+> - `podio_metadata` tree:
+    > - `events___idTable` provides a lookup table between output collection name and IDs.
 
 
 > Exercise 2.3: 
 > The __vector member__ or __relation__ of a given data collection is saved in a separate branch starts with "_".  
-    - use ```tree.keys(filter_name="_CentralCKFTrajectories*",recursive=False)``` to list those members in `CentralCKFTrajectories`
-    - for a given event, the vector member `_CentralCKFTrajectories_measurementChi2` provides a list of chi2 for each meaurement hit respectively. If multiple trajectories are found for one event, you can use `CentralCKFTrajectories.measurementChi2_begin` to locate the start index of a given trajectory (subentry). 
+> - Please use ```tree.keys(filter_name="_CentralCKFTrajectories*",recursive=False)``` to list those members in `CentralCKFTrajectories`
+> - for a given event, the vector member `_CentralCKFTrajectories_measurementChi2` provides a list of chi2 for each meaurement hit respectively. If multiple trajectories are found for one event, you can use `CentralCKFTrajectories.measurementChi2_begin` to locate the start index of a given trajectory (subentry). 
 {: .challenge}
 
 > Exercise 2.4: 
 > `CentralTrackerMeasurements` saved all available space points for tracking as 2D meaurement attached to representing surfaces. 
-    - use the relation `_CentralTrackerMeasurements_hits` to trace back to the original detector hit collection (hint: use the collection ID lookup table), and obtain the 3D coordinate of the hit 
+> - Please use the relation `_CentralTrackerMeasurements_hits` to trace back to the original detector hit collection (hint: use the collection ID lookup table), and obtain the 3D coordinate of the hit 
 {: .challenge}
 {% include links.md %}
 
 ## Future reading
-- Generate your own simulation and reconstruction rootfiles [tutorial](https://eic.github.io/tutorial-simulations-using-ddsim-and-geant4/)
-- Contribute to reconstruction algorithsm [tutorial](https://eic.github.io/tutorial-reconstruction-algorithms/)
-- Develop analysis benchmarks [tutorial](https://eic.github.io/tutorial-developing-benchmarks/)
+> - Generate your own simulation and reconstruction rootfiles [tutorial](https://eic.github.io/tutorial-simulations-using-ddsim-and-geant4/)
+> - Contribute to reconstruction algorithsm [tutorial](https://eic.github.io/tutorial-reconstruction-algorithms/)
+> - Develop analysis benchmarks [tutorial](https://eic.github.io/tutorial-developing-benchmarks/)
