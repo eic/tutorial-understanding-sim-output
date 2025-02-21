@@ -70,7 +70,8 @@ else:
 > -__Open a simulation campaign file__
   ```console
 fname      = eic_server+fpath+'e-_10GeV_130to177deg.0307.eicrecon.tree.edm4eic.root'
-tree_name  = "events" #"podio_metadata"
+tree_name  = "events"
+# tree_name = "podio_metadata"
 tree       = ur.open(fname)[tree_name]
 print(f"Read {fname}:{tree_name}. \n {tree.num_entries} events in total")
   ```
@@ -90,26 +91,26 @@ print(df)
 
 
 > Exercise 1.3: extract momentum distribution of primary electrons
->
-> Make selection
-> ```console
-  from particle import Particle
-  part   = Particle.from_name("e-")
-  pdg_id = part.pdgid.abspid
-  condition1  = df["MCParticles.PDG"]==pdg_id # select electrons
-  condition2  = df["MCParticles.generatorStatus"]==1  # select primary particles
- ```
-> extract momentum
-> ```console 
-  df_new = df[condition1]   # all electrons
-  mom    = np.sqrt(df_new["MCParticles.momentum.x"]**2+df_new["MCParticles.momentum.y"]**2+df_new["MCParticles.momentum.z"]**2)
-  bins   = np.arange(0,20)
-  _      = plt.hist(mom,bins=bins,alpha=0.5)
+```console
+# select electrons
+from particle import Particle
+part   = Particle.from_name("e-")
+pdg_id = part.pdgid.abspid
+condition1  = df["MCParticles.PDG"]==pdg_id
+# select primary particles
+condition2  = df["MCParticles.generatorStatus"]==1 
 
-  df_new = df[condition1&condition2]   # primary electrons
-  mom    = np.sqrt(df_new["MCParticles.momentum.x"]**2+df_new["MCParticles.momentum.y"]**2+df_new["MCParticles.momentum.z"]**2)
-  _      = plt.hist(mom,bins=bins,histtype="step", color='r')
-  ```
+# extract momentum and plot
+# all electrons
+df_new = df[condition1]   
+mom    = np.sqrt(df_new["MCParticles.momentum.x"]**2+df_new["MCParticles.momentum.y"]**2+df_new["MCParticles.momentum.z"]**2)
+bins   = np.arange(0,20)
+_      = plt.hist(mom,bins=bins,alpha=0.5)
+# primary electrons
+df_new = df[condition1&condition2]   
+mom    = np.sqrt(df_new["MCParticles.momentum.x"]**2+df_new["MCParticles.momentum.y"]**2+df_new["MCParticles.momentum.z"]**2)
+_      = plt.hist(mom,bins=bins,histtype="step", color='r')
+```
 {: .challenge}
 
 {% include links.md %}
