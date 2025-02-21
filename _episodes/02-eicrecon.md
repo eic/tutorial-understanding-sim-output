@@ -104,17 +104,21 @@ By default, we use the Combinatorial Kalman Filter from the ACTS library to hand
 {: .challenge}
 
 ### __Reconstruction output__
-- `events` tree:
+- __events__ tree:
     - `MCParticles` and detector sim hits are copied from simulation output to recon output
     - outputs from each step of recon algorithms must be either `edm4hep` or `edm4eic` object if you want to save them in recon output
     - the default list of saved objects in recon output is defined in `EICrecon/src/services/io/podio/JEventProcessorPODIO.cc`. It can be configured in command line. 
-- `podio_metadata` tree:
+- __podio_metadata__ tree:
     - `events___idTable` provides a lookup table between output collection name and IDs.
 
 
 > Exercise 2.3: 
 > The __vector member__ or __relation__ of a given data collection is saved in a separate branch starts with "_".  
-> - Please use ```tree.keys(filter_name="_CentralCKFTrajectories*",recursive=False)``` to list those members in `CentralCKFTrajectories`
+> - Please use
+> ```console
+tree.keys(filter_name="_CentralCKFTrajectories*",recursive=False)
+``` 
+to list those members in `CentralCKFTrajectories`
 > - for a given event, the vector member `_CentralCKFTrajectories_measurementChi2` provides a list of chi2 for each meaurement hit respectively. If multiple trajectories are found for one event, you can use `CentralCKFTrajectories.measurementChi2_begin` to locate the start index of a given trajectory (subentry). 
 {: .challenge}
 
