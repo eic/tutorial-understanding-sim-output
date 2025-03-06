@@ -23,7 +23,7 @@ Each reconstruction step involves 3 components:
 
 ### __Digitization__
   All simualted detector hits are digitized to reflect certain detector specs e.g. spatial and time resolution, and energy threshold.  For example, the `VertexBarrelHits` from simulation are digitized through the `SiliconTrackerDigi` factory in `EICrecon/src/detectors/BVTX/BVTX.cc`:
-  ```console
+  ```c++
       // Digitization
     app->Add(new JOmniFactoryGeneratorT<SiliconTrackerDigi_factory>(
         "SiBarrelVertexRawHits", // factory name
@@ -44,7 +44,7 @@ Each reconstruction step involves 3 components:
 
   The actual algorithm locates at `EICrecon/src/algorithms/digi/SiliconTrackerDigi.cc`, with its input and output specified in `SiliconTrackerDigi_factory.h`:
 
-  ```console
+  ```c++
     class SiliconTrackerDigi_factory : public JOmniFactory<SiliconTrackerDigi_factory, SiliconTrackerDigiConfig> {
 
     public:
@@ -63,8 +63,8 @@ Each reconstruction step involves 3 components:
   ```
 
 By comparing the two blocks of code above, we can see that the digitized hits, `SiBarrelVertexRawHits`, are stored in the data type `RawTrackerHit` that is defined in the [edm4eic data model](https://github.com/eic/EDM4eic/blob/main/edm4eic.yaml):
-  ```console
-    edm4eic::RawTrackerHit:
+  ```yaml
+edm4eic::RawTrackerHit:
     Description: "Raw (digitized) tracker hit"
     Author: "W. Armstrong, S. Joosten"
     Members:
@@ -74,8 +74,8 @@ By comparing the two blocks of code above, we can see that the digitized hits, `
   ```
 
 In addition, the one-to-one relation between the sim hit and its digitized hit is stored as an `MCRecoTrackerHitAssociation` object: 
-  ```console
-    edm4eic::MCRecoTrackerHitAssociation:
+  ```yaml
+edm4eic::MCRecoTrackerHitAssociation:
     Description: "Association between a RawTrackerHit and a SimTrackerHit"
     Author: "C. Dilks, W. Deconinck"
     Members:
@@ -86,7 +86,7 @@ In addition, the one-to-one relation between the sim hit and its digitized hit i
   ```
 
   which is filled in `SiliconTrackerDigi.cc`:
-  ```console
+  ```c++
     auto hitassoc = associations->create();
     hitassoc.setWeight(1.0);
     hitassoc.setRawHit(item.second);
@@ -115,8 +115,8 @@ By default, we use the Combinatorial Kalman Filter from the ACTS library to hand
 > Exercise 2.3: 
 > The __vector member__ or __relation__ of a given data collection is saved in a separate branch starts with "_".  
 > - Please use
-> ```console
-tree.keys(filter_name="_CentralCKFTrajectories*",recursive=False)
+> ```python
+tree.keys(filter_name="_CentralCKFTrajectories*", recursive=False)
 ``` 
 to list those members in `CentralCKFTrajectories`
 > - for a given event, the vector member `_CentralCKFTrajectories_measurementChi2` provides a list of chi2 for each meaurement hit respectively. If multiple trajectories are found for one event, you can use `CentralCKFTrajectories.measurementChi2_begin` to locate the start index of a given trajectory (subentry). 
