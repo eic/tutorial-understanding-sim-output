@@ -30,7 +30,7 @@ This Geant4-based simualtion package propagates particles through magnetic field
 
   Below is an example from epic/compact/tracking/vertex_barrel.xml:
 
-```console
+```xml
   <readouts>
     <readout name="VertexBarrelHits">
       <segmentation type="CartesianGridXY" grid_size_x="0.020*mm" grid_size_y="0.020*mm" />
@@ -51,7 +51,7 @@ This Geant4-based simualtion package propagates particles through magnetic field
 >
 > -__Browse the directory__ 
   > For stand-alone `xrdfs` command, see the [previous tutorials](https://eic.github.io/tutorial-analysis/01-introduction/index.html). Here we will proceed with the python interface:
-  ```console
+  ```python
 from XRootD import client
 # Create XRootD client
 eic_server = 'root://dtn-eic.jlab.org/'
@@ -68,7 +68,7 @@ else:
     print(f"Error: {status.message}")
   ```
 > -__Open a simulation campaign file__
-  ```console
+  ```python
 fname      = eic_server+fpath+'e-_10GeV_130to177deg.0307.eicrecon.tree.edm4eic.root'
 tree_name  = "events"
 # tree_name = "podio_metadata"
@@ -81,7 +81,7 @@ print(f"Read {fname}:{tree_name}. \n {tree.num_entries} events in total")
 > Exercise 1.2: inspect available branches in a rootfile
 > -  use ```tree.keys(filter_name="*",recursive=False)``` to display all branches
 > -  extract a given branch to dataframe
-```console
+```python
 bname = "MCParticles" 
 df    = tree[bname].array(library="ak")
 df    = ak.to_dataframe(df)
@@ -91,7 +91,7 @@ print(df)
 
 
 > Exercise 1.3: extract momentum distribution of primary electrons
-```console
+```python
 # select electrons
 from particle import Particle
 part   = Particle.from_name("e-")
