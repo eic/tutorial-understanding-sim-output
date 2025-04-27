@@ -57,7 +57,7 @@ from XRootD import client
 eic_server = 'root://dtn-eic.jlab.org/'
 fs = client.FileSystem(eic_server)
 # List directory contents
-fpath      = '/work/eic2/EPIC/RECO/24.12.0/epic_craterlake/SINGLE/e-/10GeV/130to177deg/'
+fpath      = '/volatile/eic/EPIC/RECO/24.12.0/epic_craterlake/SINGLE/e-/10GeV/130to177deg/'
 status, files = fs.dirlist(fpath)
 # Print files
 if status.ok:
