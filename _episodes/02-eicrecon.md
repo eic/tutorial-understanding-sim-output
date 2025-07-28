@@ -129,6 +129,6 @@ to list those members in `CentralCKFTrajectories`
 {% include links.md %}
 
 ## What's next
-- Generate your own simulation and reconstruction rootfiles [tutorial](https://eic.github.io/tutorial-simulations-using-ddsim-and-geant4/)
+- Generate your own simulation and reconstruction rootfiles [tutorial](https://eic.github.io/tutorial-simulations-using-npsim-and-geant4/)
 - Contribute to reconstruction algorithsm [tutorial](https://eic.github.io/tutorial-reconstruction-algorithms/)
 - Develop analysis benchmarks [tutorial](https://eic.github.io/tutorial-developing-benchmarks/)
