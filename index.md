@@ -8,7 +8,7 @@ permalink: index.html  # Is the only page that doesn't follow the pattern /:path
 > 
 > This tutorial follows other tutorial in the EIC series:
 > - [Setting Up Your Environment](https://eic.github.io/tutorial-setting-up-environment/)
-> - [DD4hep Simulation](https://eic.github.io/tutorial-simulations-using-ddsim-and-geant4/)
+> - [DD4hep Simulation](https://eic.github.io/tutorial-simulations-using-npsim-and-geant4/)
 > - [Analysis](https://eic.github.io/tutorial-analysis/)
 > 
 > Further information:
