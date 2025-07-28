@@ -21,7 +21,7 @@ This Geant4-based simualtion package propagates particles through magnetic field
   
   The collision event at ePIC, including the beam particles, vertices, and outgoing particles, are typically generated with a dedicated event generator, e.g. PYTHIA8 for specific physics channels. The outputs are provided to the DD4hep simulation in [HEPMC3 format](https://arxiv.org/pdf/1912.08005).
 
-  One can also use the DD4hep's particle gun to generate outgoing particles with given vertex and distribution, see the [previous tutorial](https://eic.github.io/tutorial-simulations-using-ddsim-and-geant4/aio/index.html) on `ddsim`.
+  One can also use the DD4hep's particle gun to generate outgoing particles with given vertex and distribution, see the [previous tutorial](https://eic.github.io/tutorial-simulations-using-npsim-and-geant4/aio/index.html) on `ddsim`.
 
 
 ### __Input 2: Detector description__
