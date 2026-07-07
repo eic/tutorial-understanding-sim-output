@@ -149,7 +149,7 @@ The flow chart follows the chain measurements → trajectories → track paramet
   - outputs from each step of recon algorithms must be either an `edm4hep` or `edm4eic` object if you want to save them in recon output
   - the default list of saved objects in recon output is defined in `EICrecon/src/services/io/podio/JEventProcessorPODIO.cc`. It can be configured on the command line.
 - __podio_metadata__ tree:
-  - `events___idTable` provides a lookup table between output collection name and IDs.
+  - `events___CollectionTypeInfo` provides a lookup table between output collection name and IDs (its `collectionID` and `name` members line up index-by-index; older files exposed this as `events___idTable`).
 
 ::::::::::::::::::::::::::::::::::::::::::::: challenge
 
@@ -187,9 +187,11 @@ slice into the flat `_CentralCKFTrajectories_measurementChi2` vector.
 
 ::::::::::::::: solution
 
-Each entry of `_CentralTrackerMeasurements_hits` is an object ID holding a collection ID and an index.
-Use the `events___idTable` in the `podio_metadata` tree to map the collection ID back to the original
-hit collection name, then index into that collection to read the hit's 3D position.
+Each entry of `_CentralTrackerMeasurements_hits` is an object ID holding a collection ID
+(`_CentralTrackerMeasurements_hits.collectionID`) and an index (`_CentralTrackerMeasurements_hits.index`).
+Use the `events___CollectionTypeInfo` branch in the `podio_metadata` tree to build a
+`collectionID -> name` map (zip its `.collectionID` and `.name` members), map the collection ID back to
+the original hit collection name, then index into that collection to read the hit's 3D position.
 
 :::::::::::::::
 

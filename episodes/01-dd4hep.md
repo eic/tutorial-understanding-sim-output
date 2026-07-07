@@ -70,7 +70,7 @@ The simulation campaign [dataset documentation](https://eic.github.io/epic-prod/
   eic_server = 'root://dtn-eic.jlab.org/'
   fs = client.FileSystem(eic_server)
   # List directory contents
-  fpath      = '/volatile/eic/EPIC/RECO/24.12.0/epic_craterlake/SINGLE/e-/10GeV/130to177deg/'
+  fpath      = '/volatile/eic/EPIC/RECO/26.02.0/epic_craterlake/SINGLE/e-/10GeV/130to177deg/'
   status, files = fs.dirlist(fpath)
   # Print files
   if status.ok:
@@ -84,7 +84,7 @@ The simulation campaign [dataset documentation](https://eic.github.io/epic-prod/
 - __Open a simulation campaign file__
 
   ```python
-  fname      = eic_server+fpath+'e-_10GeV_130to177deg.0307.eicrecon.tree.edm4eic.root'
+  fname      = eic_server+fpath+'e-_10GeV_130to177deg.0000.eicrecon.edm4eic.root'
   tree_name  = "events"
   # tree_name = "podio_metadata"
   tree       = ur.open(fname)[tree_name]
