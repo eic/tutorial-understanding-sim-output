@@ -139,7 +139,13 @@
     <loc>https://eic.github.io/tutorial-understanding-sim-output/_layouts/workshop.html</loc>
   </url>
   <url>
+    <loc>https://eic.github.io/tutorial-understanding-sim-output/aio.html</loc>
+  </url>
+  <url>
     <loc>https://eic.github.io/tutorial-understanding-sim-output/citation.html</loc>
+  </url>
+  <url>
+    <loc>https://eic.github.io/tutorial-understanding-sim-output/images.html</loc>
   </url>
   <url>
     <loc>https://eic.github.io/tutorial-understanding-sim-output/index.html</loc>
@@ -163,16 +169,34 @@
     <loc>https://eic.github.io/tutorial-understanding-sim-output/instructor/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://eic.github.io/tutorial-understanding-sim-output/instructor/aio.html</loc>
+  </url>
+  <url>
     <loc>https://eic.github.io/tutorial-understanding-sim-output/instructor/citation.html</loc>
   </url>
   <url>
+    <loc>https://eic.github.io/tutorial-understanding-sim-output/instructor/images.html</loc>
+  </url>
+  <url>
     <loc>https://eic.github.io/tutorial-understanding-sim-output/instructor/index.html</loc>
+  </url>
+  <url>
+    <loc>https://eic.github.io/tutorial-understanding-sim-output/instructor/instructor-notes.html</loc>
+  </url>
+  <url>
+    <loc>https://eic.github.io/tutorial-understanding-sim-output/instructor/key-points.html</loc>
   </url>
   <url>
     <loc>https://eic.github.io/tutorial-understanding-sim-output/instructor/profiles.html</loc>
   </url>
   <url>
     <loc>https://eic.github.io/tutorial-understanding-sim-output/instructor/reference.html</loc>
+  </url>
+  <url>
+    <loc>https://eic.github.io/tutorial-understanding-sim-output/instructor-notes.html</loc>
+  </url>
+  <url>
+    <loc>https://eic.github.io/tutorial-understanding-sim-output/key-points.html</loc>
   </url>
   <url>
     <loc>https://eic.github.io/tutorial-understanding-sim-output/profiles.html</loc>
