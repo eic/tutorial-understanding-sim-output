@@ -92,10 +92,9 @@ edm4eic::MCRecoTrackerHitLink:
     To: edm4hep::SimTrackerHit
 ```
 
-The generated link object keeps the `weight` associated with the hit pair in addition to the `From`/`To` references.
+The generated link object also provides a `weight` field (via podio's `Link` API) in addition to the `From`/`To` references.
 
-which is filled in `SiliconTrackerDigi.cc`:
-
+This link is filled in `SiliconTrackerDigi.cc`:
 ```c++
   auto hitlink = links->create();
   hitlink.setWeight(1.0);
