@@ -41,7 +41,7 @@ All simulated detector hits are digitized to reflect certain detector specs e.g.
       },
       {
         "SiBarrelVertexRawHits",  // outputs
-        "SiBarrelVertexRawHitAssociations"
+        "SiBarrelVertexRawHitLinks"
       },
       {
           .threshold = 0.54 * dd4hep::keV, // configurations
@@ -63,7 +63,7 @@ The actual algorithm locates at `EICrecon/src/algorithms/digi/SiliconTrackerDigi
       PodioInput<edm4hep::SimTrackerHit> m_sim_hits_input {this};
 
       PodioOutput<edm4eic::RawTrackerHit> m_raw_hits_output {this};
-      PodioOutput<edm4eic::MCRecoTrackerHitAssociation> m_assoc_output {this};
+      PodioOutput<edm4eic::MCRecoTrackerHitLink> m_link_output {this};
 
       ParameterRef<double> m_threshold {this, "threshold", config().threshold};
       ParameterRef<double> m_timeResolution {this, "timeResolution", config().timeResolution};
@@ -82,26 +82,24 @@ edm4eic::RawTrackerHit:
       - int32_t           timeStamp
 ```
 
-In addition, the one-to-one relation between the sim hit and its digitized hit is stored as an `MCRecoTrackerHitAssociation` object:
+In addition, the one-to-one relation between the sim hit and its digitized hit is stored as an `MCRecoTrackerHitLink` object:
 
 ```yaml
-edm4eic::MCRecoTrackerHitAssociation:
-    Description: "Association between a RawTrackerHit and a SimTrackerHit"
+edm4eic::MCRecoTrackerHitLink:
+    Description: "Link between a RawTrackerHit and a SimTrackerHit"
     Author: "C. Dilks, W. Deconinck"
-    Members:
-      - float                 weight        // weight of this association
-    OneToOneRelations:
-      - edm4eic::RawTrackerHit rawHit       // reference to the digitized hit
-      - edm4hep::SimTrackerHit simHit       // reference to the simulated hit
+    From: edm4eic::RawTrackerHit
+    To: edm4hep::SimTrackerHit
 ```
 
-which is filled in `SiliconTrackerDigi.cc`:
+The generated link object also provides a `weight` field (via podio's `Link` API) in addition to the `From`/`To` references.
 
+This link is filled in `SiliconTrackerDigi.cc`:
 ```c++
-  auto hitassoc = associations->create();
-  hitassoc.setWeight(1.0);
-  hitassoc.setRawHit(item.second);
-  hitassoc.setSimHit(sim_hit);
+  auto hitlink = links->create();
+  hitlink.setWeight(1.0);
+  hitlink.setFrom(item.second);
+  hitlink.setTo(sim_hit);
 ```
 
 ::::::::::::::::::::::::::::::::::::::::::::: challenge
