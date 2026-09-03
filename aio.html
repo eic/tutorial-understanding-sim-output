@@ -683,7 +683,7 @@ any links that you are not going to use.
 </div>
 </section></section><section id="aio-02-eicrecon"><p>Content from <a href="02-eicrecon.html">Reconstruction workflow</a></p>
 <hr>
-<p>Last updated on 2026-07-10 |
+<p>Last updated on 2026-09-03 |
 
         <a href="https://github.com/eic/tutorial-understanding-sim-output/edit/main/episodes/02-eicrecon.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -754,7 +754,7 @@ through the <code>SiliconTrackerDigi</code> factory in
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a>      <span class="op">},</span></span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a>      <span class="op">{</span></span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a>        <span class="st">"SiBarrelVertexRawHits"</span><span class="op">,</span>  <span class="co">// outputs</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a>        <span class="st">"SiBarrelVertexRawHitAssociations"</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a>        <span class="st">"SiBarrelVertexRawHitLinks"</span></span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a>      <span class="op">},</span></span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1" aria-label="code-block-1-11"></a>      <span class="op">{</span></span>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1" aria-label="code-block-1-12"></a>          <span class="op">.</span>threshold <span class="op">=</span> <span class="fl">0.54</span> <span class="op">*</span> dd4hep<span class="op">::</span>keV<span class="op">,</span> <span class="co">// configurations</span></span>
@@ -779,7 +779,7 @@ its input and output specified in
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a>      PodioInput<span class="op">&lt;</span>edm4hep<span class="op">::</span>SimTrackerHit<span class="op">&gt;</span> <span class="va">m_sim_hits_input</span> <span class="op">{</span><span class="kw">this</span><span class="op">};</span></span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a></span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a>      PodioOutput<span class="op">&lt;</span>edm4eic<span class="op">::</span>RawTrackerHit<span class="op">&gt;</span> <span class="va">m_raw_hits_output</span> <span class="op">{</span><span class="kw">this</span><span class="op">};</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>      PodioOutput<span class="op">&lt;</span>edm4eic<span class="op">::</span>MCRecoTrackerHitAssociation<span class="op">&gt;</span> <span class="va">m_assoc_output</span> <span class="op">{</span><span class="kw">this</span><span class="op">};</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>      PodioOutput<span class="op">&lt;</span>edm4eic<span class="op">::</span>MCRecoTrackerHitLink<span class="op">&gt;</span> <span class="va">m_link_output</span> <span class="op">{</span><span class="kw">this</span><span class="op">};</span></span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a></span>
 <span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a>      ParameterRef<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> <span class="va">m_threshold</span> <span class="op">{</span><span class="kw">this</span><span class="op">,</span> <span class="st">"threshold"</span><span class="op">,</span> config<span class="op">().</span>threshold<span class="op">};</span></span>
 <span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a>      ParameterRef<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> <span class="va">m_timeResolution</span> <span class="op">{</span><span class="kw">this</span><span class="op">,</span> <span class="st">"timeResolution"</span><span class="op">,</span> config<span class="op">().</span>timeResolution<span class="op">};</span></span>
@@ -801,28 +801,28 @@ data model</a>:</p>
 <span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a><span class="at">      </span><span class="kw">-</span><span class="at"> int32_t           timeStamp</span></span></code></pre>
 </div>
 <p>In addition, the one-to-one relation between the sim hit and its
-digitized hit is stored as an <code>MCRecoTrackerHitAssociation</code>
+digitized hit is stored as an <code>MCRecoTrackerHitLink</code>
 object:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="at">edm4eic:</span><span class="fu">:MCRecoTrackerHitAssociation</span><span class="kw">:</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="at">    </span><span class="fu">Description</span><span class="kw">:</span><span class="at"> </span><span class="st">"Association between a RawTrackerHit and a SimTrackerHit"</span></span>
+<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="at">edm4eic:</span><span class="fu">:MCRecoTrackerHitLink</span><span class="kw">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="at">    </span><span class="fu">Description</span><span class="kw">:</span><span class="at"> </span><span class="st">"Link between a RawTrackerHit and a SimTrackerHit"</span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a><span class="at">    </span><span class="fu">Author</span><span class="kw">:</span><span class="at"> </span><span class="st">"C. Dilks, W. Deconinck"</span></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="at">    </span><span class="fu">Members</span><span class="kw">:</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a><span class="at">      </span><span class="kw">-</span><span class="at"> float                 weight        // weight of this association</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a><span class="at">    </span><span class="fu">OneToOneRelations</span><span class="kw">:</span></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a><span class="at">      </span><span class="kw">-</span><span class="at"> edm4eic::RawTrackerHit rawHit       // reference to the digitized hit</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a><span class="at">      </span><span class="kw">-</span><span class="at"> edm4hep::SimTrackerHit simHit       // reference to the simulated hit</span></span></code></pre>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="at">    </span><span class="fu">From</span><span class="kw">:</span><span class="at"> edm4eic::RawTrackerHit</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a><span class="at">    </span><span class="fu">To</span><span class="kw">:</span><span class="at"> edm4hep::SimTrackerHit</span></span></code></pre>
 </div>
-<p>which is filled in <code>SiliconTrackerDigi.cc</code>:</p>
+<p>The generated link object also provides a <code>weight</code> field
+(via podio’s <code>Link</code> API) in addition to the
+<code>From</code>/<code>To</code> references.</p>
+<p>This link is filled in <code>SiliconTrackerDigi.cc</code>:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a>  <span class="kw">auto</span> hitassoc <span class="op">=</span> associations<span class="op">-&gt;</span>create<span class="op">();</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a>  hitassoc<span class="op">.</span>setWeight<span class="op">(</span><span class="fl">1.0</span><span class="op">);</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a>  hitassoc<span class="op">.</span>setRawHit<span class="op">(</span>item<span class="op">.</span>second<span class="op">);</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a>  hitassoc<span class="op">.</span>setSimHit<span class="op">(</span>sim_hit<span class="op">);</span></span></code></pre>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a>  <span class="kw">auto</span> hitlink <span class="op">=</span> links<span class="op">-&gt;</span>create<span class="op">();</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a>  hitlink<span class="op">.</span>setWeight<span class="op">(</span><span class="fl">1.0</span><span class="op">);</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a>  hitlink<span class="op">.</span>setFrom<span class="op">(</span>item<span class="op">.</span>second<span class="op">);</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a>  hitlink<span class="op">.</span>setTo<span class="op">(</span>sim_hit<span class="op">);</span></span></code></pre>
 </div>
 <div id="exercise-2.1" class="callout challenge">
 <div class="callout-square">
@@ -1076,7 +1076,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/" class="external-link">varnish (1.1.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/" class="external-link">sandpaper (0.21.0)</a>, <a href="https://github.com/carpentries/pegboard/tree/" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/" class="external-link">varnish (1.1.2)</a></p>
 		</div>
 		</footer>
 </div> <!-- / div.container -->
@@ -1099,8 +1099,8 @@ any links that you are not going to use.
   "url": "https://eic.github.io/tutorial-understanding-sim-output/aio.html",
   "identifier": "https://eic.github.io/tutorial-understanding-sim-output/aio.html",
   "dateCreated": "2024-01-01",
-  "dateModified": "2026-08-25",
-  "datePublished": "2026-08-25"
+  "dateModified": "2026-09-03",
+  "datePublished": "2026-09-03"
 }
 
   </script><script>
