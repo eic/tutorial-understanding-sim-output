@@ -65,12 +65,15 @@ The simulation campaign [dataset documentation](https://eic.github.io/epic-prod/
   For the stand-alone `xrdfs` command, see the [previous Analysis tutorial](https://eic.github.io/tutorial-analysis/). Here we will proceed with the python interface:
 
   ```python
+  import os
+  # CA certificates for the TLS connection to the server (already set inside eic-shell)
+  os.environ.setdefault("X509_CERT_DIR", "/etc/ssl/certs")
   from XRootD import client
   # Create XRootD client
   eic_server = 'root://dtn2304.jlab.org:8443/'
   fs = client.FileSystem(eic_server)
   # List directory contents
-  fpath      = '/jlab-osdf-ro/eic/EPIC/volatile/RECO/26.02.0/epic_craterlake/SINGLE/e-/10GeV/130to177deg/'
+  fpath      = '/jlab-osdf-ro/eic/EPIC/volatile/RECO/25.10.4/epic_craterlake/SINGLE/e-/10GeV/130to177deg/'
   status, files = fs.dirlist(fpath)
   # Print files
   if status.ok:
