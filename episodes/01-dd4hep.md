@@ -67,10 +67,10 @@ The simulation campaign [dataset documentation](https://eic.github.io/epic-prod/
   ```python
   from XRootD import client
   # Create XRootD client
-  eic_server = 'root://dtn-eic.jlab.org/'
+  eic_server = 'root://dtn2304.jlab.org:8443/'
   fs = client.FileSystem(eic_server)
   # List directory contents
-  fpath      = '/volatile/eic/EPIC/RECO/26.02.0/epic_craterlake/SINGLE/e-/10GeV/130to177deg/'
+  fpath      = '/jlab-osdf-ro/eic/EPIC/volatile/RECO/26.02.0/epic_craterlake/SINGLE/e-/10GeV/130to177deg/'
   status, files = fs.dirlist(fpath)
   # Print files
   if status.ok:
